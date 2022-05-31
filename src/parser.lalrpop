@@ -1,27 +1,46 @@
 use std::str::FromStr;
+use std::collections::HashMap;
+use lalrpop_util::ParseError;
 
-grammar;
+grammar<'s>(symtab:&'s mut HashMap<String,f32>);
 
-pub Expr:f32 = {
+pub Statement: f32 = {
+    Expr,
+    <s:Symbol> "=" <e:Expr>  =>{
+        symtab.insert(s,e);
+        e
+    },
+}
+
+Expr:f32 = {
     <e:Expr> "+" <f:Factor> => e+f,
     <e:Expr> "-" <f:Factor> => e-f,
+    <f:Factor> "(" <e:Expr> ")" => f*e,
     <Factor>
 };
 
 Factor:f32 = {
-    <f:Factor> "^" <t:Term> => f.powf(t),  //Revise to one line
-    <f:Factor> "**" <t:Term> => f.powf(t), //Revise
+    <f:Factor> "^" <t:Term> => f.powf(t),
+    <f:Factor> "**" <t:Term> => f.powf(t),
     <f:Factor> "*" <t:Term> => f*t,
     <f:Factor> "/" <t:Term> => f/t,
     <Term>
 };
 
+
 Term: f32 = {
-    Num,
-    "(" <Expr> ")",
+    <Num>,                                                          // 5
+    "(" <Expr> ")",                                                 // (5)
+    <s:Symbol> =>? match symtab.get(&s){
+        Some(v)=>Ok(*v),
+        None=>Err(ParseError::User{error:"Undefined Symbol"})       // x
+    },
+    <t:Term> <s:Symbol> =>? match symtab.get(&s){
+        Some(v)=>Ok(t*v),
+        None=>Err(ParseError::User{error:"Undefined Symbol"})       // 5x
+    }
 };
 
 Num: f32 = <s:r"[0-9]+\.?[0-9]*"> => f32::from_str(s).unwrap();
 
 Symbol:String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_owned();
-
