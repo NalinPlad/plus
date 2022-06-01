@@ -21,7 +21,7 @@ fn main() {
     symtab.insert(String::from("e"), E);
     symtab.insert(String::from("ans"), 0.0_f64); // ans variable. updated after very succseful operation
 
-    println!("{}", "rcalc FOSS [HELP for more info]".blue().underline());
+    println!("{}", "[type HELP for more info]".blue().underline());
     print!("{} ", ">>>>>".blue().bold());
     std::io::stdout().flush().unwrap();
     for line in std::io::stdin().lock().lines() {
