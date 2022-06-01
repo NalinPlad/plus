@@ -43,4 +43,4 @@ Term: f64 = {
 
 Num: f64 = <s:r"[0-9]+\.?[0-9]*"> => f64::from_str(s).unwrap();
 
-Symbol:String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_owned();
+Symbol: String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_owned();
