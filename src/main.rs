@@ -10,8 +10,8 @@ use std::io::Write;
 lalrpop_mod!(pub parser);
 
 fn main() {
-
     let mut symtab = HashMap::new();
+    println!("{}","rcalc FOSS [HELP for more info]".blue().underline());
     print!("{} ",">>>>>".blue().bold());
     std::io::stdout().flush().unwrap();
     for line in std::io::stdin().lock().lines() {
