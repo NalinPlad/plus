@@ -16,7 +16,6 @@ pub Statement: f64 = {
 Expr:f64 = {
     <e:Expr> "+" <f:Factor> => e+f,
     <e:Expr> "-" <f:Factor> => e-f,
-    <f:Factor> "(" <e:Expr> ")" => f*e,
     <Factor>
 };
 
@@ -25,6 +24,7 @@ Factor:f64 = {
     <f:Factor> "**" <t:Term> => f.powf(t),
     <f:Factor> "*" <t:Term> => f*t,
     <f:Factor> "/" <t:Term> => f/t,
+    <f:Factor> "(" <e:Expr> ")" => f*e,
     <Term>
 };
 

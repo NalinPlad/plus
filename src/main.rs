@@ -26,7 +26,7 @@ fn main() {
         let line = line.expect("Input Error");
         match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
             Ok(v) => {
-                println!("{}", (v * 10000000000.0).round() / 10000000000.0);
+                println!("{}", (v * 10000000000.0).round() / 10000000000.0); // 10 digits of decimal precision
                 *symtab.get_mut("ans").unwrap() = v;
             },
             Err(e) => println!("Error : {}", e),
