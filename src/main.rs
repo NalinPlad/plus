@@ -11,6 +11,10 @@ lalrpop_mod!(pub parser);
 
 fn main() {
     let mut symtab = HashMap::new();
+
+    // Insert some default variables. Change these later
+    symtab.insert(String::from("pi"),3.141_f64);
+    symtab.insert(String::from("e"),2.718_f64);
     println!("{}","rcalc FOSS [HELP for more info]".blue().underline());
     print!("{} ",">>>>>".blue().bold());
     std::io::stdout().flush().unwrap();
