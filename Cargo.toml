@@ -1,7 +1,10 @@
 [package]
-name = "calc"
-version = "0.1.3"
+name = "plus"
+version = "0.1.5"
 edition = "2021"
+exclude = [
+"/rc.hist.txt"
+]
 
 [build-dependencies]
 lalrpop = "0.19.7"

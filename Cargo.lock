@@ -59,18 +59,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
-name = "calc"
-version = "0.1.3"
-dependencies = [
- "colored",
- "exitcode",
- "lalrpop",
- "lalrpop-util",
- "regex",
- "rustyline",
-]
-
-[[package]]
 name = "cc"
 version = "1.0.73"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -428,6 +416,18 @@ name = "pico-args"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "db8bcd96cb740d03149cbad5518db9fd87126a10ab519c011893b1754134c468"
+
+[[package]]
+name = "plus"
+version = "0.1.5"
+dependencies = [
+ "colored",
+ "exitcode",
+ "lalrpop",
+ "lalrpop-util",
+ "regex",
+ "rustyline",
+]
 
 [[package]]
 name = "precomputed-hash"
