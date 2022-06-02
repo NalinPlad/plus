@@ -26,7 +26,7 @@ fn main() {
     std::io::stdout().flush().unwrap();
     for line in std::io::stdin().lock().lines() {
         let line = line.expect("Input Error");
-        if line.trim() == "quit" || line.trim() == "exit" {
+        if line.trim().to_lowercase() == "quit" || line.trim() == "exit" {
             process::exit(exitcode::OK)
         } else {
             match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
