@@ -10,14 +10,14 @@ pub Statement: f64 = {
         symtab.insert(s,e);
         e
     },
-    "sin(" <e:Expr> ")"  => e.sin(),
-    "cos(" <e:Expr> ")"  => e.cos(),
-    "tan(" <e:Expr> ")"  => e.tan(),
 }
 
 Expr:f64 = {
     <e:Expr> "+" <f:Factor> => e+f,
     <e:Expr> "-" <f:Factor> => e-f,
+    "sin(" <e:Expr> ")"  => e.sin(),
+    "cos(" <e:Expr> ")"  => e.cos(),
+    "tan(" <e:Expr> ")"  => e.tan(),
     <Factor>
 };
 

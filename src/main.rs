@@ -15,8 +15,9 @@ lalrpop_mod!(pub parser);
 
 fn main() {
     let mut symtab = HashMap::new();
+    let mut hist: HashMap<String, f64> = HashMap::new();
 
-    // Insert some default variables. Change these later
+    // Insert some default variables
     symtab.insert(String::from("pi"), PI);
     symtab.insert(String::from("e"), E);
     symtab.insert(String::from("ans"), 0.0_f64); // ans variable. updated after very succseful operation
@@ -26,17 +27,34 @@ fn main() {
     std::io::stdout().flush().unwrap();
     for line in std::io::stdin().lock().lines() {
         let line = line.expect("Input Error");
-        if line.trim().to_lowercase() == "quit" || line.trim() == "exit" {
-            process::exit(exitcode::OK)
-        } else {
-            match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
-                Ok(v) => {
-                    println!("{}", (v * 10000000000.0).round() / 10000000000.0); // 10 digits of decimal precision
-                    *symtab.get_mut("ans").unwrap() = v;
+        
+        (|| { //Match input
+            match line.trim(){
+                "quit" | "exit" => process::exit(exitcode::OK),
+                
+                "history" => {
+                    println!("----------");
+                    for (key, value) in &hist {
+                        println!("{}: {}", key, value.to_string().bold());
+                    }
+                    println!("----------");
+                },
+                
+                "" => return,
+                
+                _ => {
+                    match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
+                        Ok(v) => {
+                            println!("{}", (v * 10000000000.0).round() / 10000000000.0); // 10 digits of decimal precision
+                            *symtab.get_mut("ans").unwrap() = v;
+                            hist.insert(String::from(line.trim()),v);
+                        }
+                        Err(e) => println!("Error : {}", e),
+                    };
                 }
-                Err(e) => println!("Error : {}", e),
             }
-        }
+        })();
+
         print!("{} ", ">>>>>".blue().bold());
         std::io::stdout().flush().unwrap();
     }
