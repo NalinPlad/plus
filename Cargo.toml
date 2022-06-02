@@ -5,6 +5,10 @@ edition = "2021"
 exclude = [
 "/rc.hist.txt"
 ]
+authors = ["notmysql"]
+description = "The only CLI calculator you'll ever need"
+license = "MIT"
+
 
 [build-dependencies]
 lalrpop = "0.19.7"
