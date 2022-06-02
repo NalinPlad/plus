@@ -1,0 +1,49 @@
+use std::str::FromStr;
+use std::collections::HashMap;
+use lalrpop_util::ParseError;
+
+grammar<'s>(symtab:&'s mut HashMap<String,f64>);
+
+pub Statement: f64 = {
+    Expr,
+    <s:Symbol> "=" <e:Expr>  => {
+        symtab.insert(s,e);
+        e
+    },
+}
+
+Expr:f64 = {
+    <e:Expr> "+" <f:Factor> => e+f,
+    <e:Expr> "-" <f:Factor> => e-f,
+    "sin(" <e:Expr> ")"  => e.sin(),
+    "cos(" <e:Expr> ")"  => e.cos(),
+    "tan(" <e:Expr> ")"  => e.tan(),
+    <Factor>
+};
+
+Factor:f64 = {
+    <f:Factor> "^" <t:Term> => f.powf(t),
+    <f:Factor> "**" <t:Term> => f.powf(t),
+    <f:Factor> "*" <t:Term> => f*t,
+    <f:Factor> "/" <t:Term> => f/t,
+    <f:Factor> "(" <e:Expr> ")" => f*e,
+    <Term>
+};
+
+
+Term: f64 = {
+    <Num>,                                                          // 5
+    "(" <Expr> ")",                                                 // (5)
+    <s:Symbol> =>? match symtab.get(&s){
+        Some(v)=>Ok(*v),
+        None=>Err(ParseError::User{error:"Undefined Symbol"})       // x
+    },
+    <t:Term> <s:Symbol> =>? match symtab.get(&s){
+        Some(v)=>Ok(t*v),
+        None=>Err(ParseError::User{error:"Undefined Symbol"})       // 5x
+    }
+};
+
+Num: f64 = <s:r"[0-9]+\.?[0-9]*"> => f64::from_str(s).unwrap();
+
+Symbol: String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_owned();
