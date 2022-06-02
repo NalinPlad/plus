@@ -14,6 +14,20 @@ use rustyline::error::ReadlineError;
 
 lalrpop_mod!(pub parser);
 
+pub fn root(x: f64, n: u32) -> f64 {
+    let exp = 1.0 / n as f64;
+    if (n & 1) == 0 {
+        x.powf(exp)
+    } else {
+        let absroot = x.abs().powf(exp);
+        if x < 0.0 {
+            -absroot
+        } else {
+            absroot
+        }
+    }
+}
+
 fn main() {
     let history_path = "rc.hist.txt";
     let mut symtab = HashMap::new();
@@ -45,8 +59,8 @@ fn main() {
                             if s_hist.keys().len() < 1{
                                 println!("no session history [ctrl-r => search  all history]")
                             } else {
+                                println!{"session history [ctrl-r => search  all history]"}
                                 for (key, value) in &s_hist {
-                                    println!{"session history [ctrl-r => search  all history]"}
                                     println!("{}: {}", key, value);
                                 }
                             }
