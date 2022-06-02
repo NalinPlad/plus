@@ -13,7 +13,6 @@ pub Statement: f64 = {
     "sin(" <e:Expr> ")"  => e.sin(),
     "cos(" <e:Expr> ")"  => e.cos(),
     "tan(" <e:Expr> ")"  => e.tan(),
-    "fact(" <e:Expr> ")" => e.factorial(),
 }
 
 Expr:f64 = {
