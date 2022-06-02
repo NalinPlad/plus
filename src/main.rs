@@ -33,11 +33,11 @@ fn main() {
                 "quit" | "exit" => process::exit(exitcode::OK),
                 
                 "history" => {
-                    println!("----------");
+                    
                     for (key, value) in &hist {
                         println!("{}: {}", key, value.to_string().bold());
                     }
-                    println!("----------");
+                    
                 },
                 
                 "" => return,
@@ -45,9 +45,10 @@ fn main() {
                 _ => {
                     match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
                         Ok(v) => {
-                            println!("{}", (v * 10000000000.0).round() / 10000000000.0); // 10 digits of decimal precision
-                            *symtab.get_mut("ans").unwrap() = v;
-                            hist.insert(String::from(line.trim()),v);
+                            let v_10 = (v * 10000000000.0).round() / 10000000000.0; // 10 digits of decimal precision
+                            println!("{}", v_10);
+                            *symtab.get_mut("ans").unwrap() = v_10;
+                            hist.insert(String::from(line.trim()),v_10);
                         }
                         Err(e) => println!("Error : {}", e),
                     };
