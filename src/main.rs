@@ -11,13 +11,13 @@ use std::collections::HashMap;
 use std::process;
 use rustyline::Editor;
 use rustyline::error::ReadlineError;
-use std::env;
-use std::fs;
 
 lalrpop_mod!(pub parser);
 
 fn main() {
+    let history_path = "rc.hist.txt";
     let mut symtab = HashMap::new();
+    let mut s_hist = HashMap::new();
 
     // Insert some default variables
     symtab.insert(String::from("pi"), PI);
@@ -26,11 +26,11 @@ fn main() {
 
     println!("{}", "[type HELP for more info]".blue().underline());
     
-    // `()` can be used when no completer is required
     let mut rl = Editor::<()>::new();
-    if rl.load_history("history.txt").is_err() {
+    if rl.load_history(history_path).is_err() {
         println!("No previous history.");
     }
+
     loop {
         let readline = rl.readline(">-> ");
         match readline {
@@ -42,11 +42,14 @@ fn main() {
                         "quit" | "exit" => process::exit(exitcode::OK),
                         
                         "history" => {
-                            
-                            // for (key, value) in &hist {
-                            //     println!("{}: {}", key, value.to_string().bold());
-                            // }
-                            
+                            if s_hist.keys().len() < 1{
+                                println!("no session history [ctrl-r => search  all history]")
+                            } else {
+                                for (key, value) in &s_hist {
+                                    println!{"session history [ctrl-r => search  all history]"}
+                                    println!("{}: {}", key, value);
+                                }
+                            }
                         },
                         
                         "" => return,
@@ -57,7 +60,8 @@ fn main() {
                                     let v_10 = (v * 10000000000.0).round() / 10000000000.0; // 10 digits of decimal precision
                                     println!("{}", v_10);
                                     *symtab.get_mut("ans").unwrap() = v_10;
-                                    // hist.insert(String::from(line.trim()),v_10);
+                                    rl.add_history_entry(line.as_str()); // perm hist
+                                    s_hist.insert(String::from(line.trim()),v_10); // session hist
                                 }
                                 Err(e) => println!("Error : {}", e),
                             };
@@ -80,5 +84,5 @@ fn main() {
             }
         }
     }
-    rl.save_history("history.txt").unwrap();
+    rl.save_history(history_path).unwrap();
 }
