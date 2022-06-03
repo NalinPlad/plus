@@ -7,6 +7,7 @@ Lots of additions to a basic `lalrpop` calculator parser including:
 * Negative numbers
 * Variables
 * Trig functions
+* Logarithms
 * Absolute values
 * Command history
 * Basic floating point rounding
