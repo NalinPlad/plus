@@ -14,11 +14,16 @@ pub Statement: f64 = {
 
 Expr:f64 = {
     <e:Expr> "+" <f:Factor> => e+f,
-    <e:Expr> "-" <f:Factor> => e-f,
+    <e:Expr> " - " <f:Factor> => e-f,
+    <e:Expr> "–" <f:Factor> => e-f,
     
     "sin(" <e:Expr> ")"  => e.sin(),
     "cos(" <e:Expr> ")"  => e.cos(),
     "tan(" <e:Expr> ")"  => e.tan(),
+
+    "csc(" <e:Expr> ")"  => 1.0/e.sin(),
+    "sec(" <e:Expr> ")"  => 1.0/e.cos(),
+    "cot(" <e:Expr> ")"  => 1.0/e.tan(),
     
     "√" <t:Term> => t.sqrt(),
     "sqrt(" <e:Expr> ")" => e.sqrt(),
@@ -57,6 +62,6 @@ Term: f64 = {
     }
 };
 
-Num: f64 = <s:r"[-0-9]+\.?[0-9]*"> => f64::from_str(s).unwrap();
+Num: f64 = <s:r"[0-9]+\.?[0-9]*"> => f64::from_str(s).unwrap();
 
 Symbol: String = <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_owned();

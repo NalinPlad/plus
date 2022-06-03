@@ -37,7 +37,7 @@ fn main() {
     symtab.insert(String::from("e"), E);
     symtab.insert(String::from("ans"), 0.0_f64); // ans variable. updated after very succseful operation
 
-    println!("{}", "[type HELP for more info]".blue().underline());
+    // println!("{}", "[type HELP for more info]".blue().underline());
     
     let mut rl = Editor::<()>::new();
     if rl.load_history(history_path).is_err() {
@@ -45,7 +45,7 @@ fn main() {
     }
 
     loop {
-        let readline = rl.readline(">-> ");
+        let readline = rl.readline("plus> ");
         match readline {
             Ok(line) => {
                 rl.add_history_entry(line.as_str());
@@ -70,7 +70,10 @@ fn main() {
                         _ => {
                             match parser::StatementParser::new().parse(&mut symtab, line.trim()) {
                                 Ok(v) => {
-                                    let v_10 = (v * 10000000000.0).round() / 10000000000.0; // 10 digits of decimal precision
+                                    let mut v_10 = (v * 10000000000.0).round() / 10000000000.0; // 10 digits of decimal precision
+                                    if v_10 == -0.0{
+                                        v_10 = 0.0
+                                    }
                                     println!("{}", v_10);
                                     *symtab.get_mut("ans").unwrap() = v_10;
                                     rl.add_history_entry(line.as_str()); // perm hist
