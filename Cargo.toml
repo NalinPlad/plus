@@ -1,6 +1,6 @@
 [package]
 name = "plus"
-version = "0.1.5"
+version = "1.2.2"
 edition = "2021"
 exclude = [
 "/rc.hist.txt"
