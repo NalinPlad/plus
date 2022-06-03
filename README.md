@@ -5,7 +5,7 @@ The only CLI calculator you'll ever need
 Lots of additions to a basic `lalrpop` calculator parser including:
 
 * Negative numbers 😱
-* Variables 𝐗
+* Variables 👩‍💻
 * Trig functions 🌊
 * Logarithms 🪵
 * Absolute values 🧮
