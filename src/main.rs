@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate lalrpop_util;
 extern crate colored;
-extern crate exitcode;
 extern crate rustyline;
 
 use colored::*;
