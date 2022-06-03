@@ -1,0 +1,9 @@
+- lalrpop -
+[ ] error handling
+[ ] graphing
+[ ] arrays
+- main.rs -
+[ ] fix history
+[ ] custimizable prompt
+[ ] color prompt
+[ ] bold prompt
