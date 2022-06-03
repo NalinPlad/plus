@@ -20,6 +20,16 @@ And many more quality of life features
 
 ---
 
+### Installation 🧮
+
+Download prebuilt binaries in the 'releases' tab on the right
+You can also add plus to the PATH for easy access
+
+
+
+
+---
+
 ### Docs 📖
 
 Ill add some basic documentation of some of plus's functionality here. Most people wont even need to read this to user plus, it is very straight forward!
