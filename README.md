@@ -25,9 +25,6 @@ And many more quality of life features
 Download prebuilt binaries in the 'releases' tab on the right
 You can also add plus to the PATH for easy access
 
-
-
-
 ---
 
 ### Docs 📖
