@@ -2,6 +2,8 @@
 
 The only CLI calculator you'll ever need
 
+> NOTE: This is a fun side project I work on to learn rust. There are much better CLI calculators than this 🤷‍♂️
+
 Lots of additions to a basic `lalrpop` calculator parser including:
 
 * Negative numbers 😱
@@ -43,7 +45,20 @@ plus> (16/4)^3
 64
 ```
 
-all work as intended. Note here that the parser will ignore whitespace, so you could also type `plus> ( 16  /4) ^  3`
+all work as intended. Note here that the parser will ignore whitespace, so you could also type
+
+```
+plus> ( 16  /4) ^  3
+64
+```
+
+Also, check this out 👀
+
+```
+plus> 0.1 + 0.2
+0.3
+```
+
 
 #### Variables
 
