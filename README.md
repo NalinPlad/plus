@@ -2,6 +2,8 @@
 
 The only CLI calculator you'll ever need
 
+> NOTE: This is a fun side project I work on to learn rust. There are much better CLI calculators than this 🤷‍♂️
+
 Lots of additions to a basic `lalrpop` calculator parser including:
 
 * Negative numbers 😱
@@ -25,9 +27,6 @@ And many more quality of life features
 Download prebuilt binaries in the 'releases' tab on the right
 You can also add plus to the PATH for easy access
 
-
-
-
 ---
 
 ### Docs 📖
@@ -46,7 +45,20 @@ plus> (16/4)^3
 64
 ```
 
-all work as intended. Note here that the parser will ignore whitespace, so you could also type `plus> ( 16  /4) ^  3`
+all work as intended. Note here that the parser will ignore whitespace, so you could also type
+
+```
+plus> ( 16  /4) ^  3
+64
+```
+
+Also, check this out 👀
+
+```
+plus> 0.1 + 0.2
+0.3
+```
+
 
 #### Variables
 
@@ -78,7 +90,8 @@ multiplication syntax is pretty robust, as seen in the last 3 lines
 
 #### Trig functions
 
-plus (currently) includes 6 trig functions, sin(), cos(), tan(), and csc(), sec(), cot(). It also defines the constant `pi`.
+plus (currently) includes 6 trig functions, sin(), cos(), tan(), and csc(), sec(), cot(). 
+> note the constant `pi`
 
 ```
 plus> sin(2pi)
@@ -104,4 +117,33 @@ plus> (3)√125
 5
 plus> cbrt(1000)
 10
+```
+
+#### Logarithms
+
+calculate logarithms using the `log()` keyword. There are also functions for natural logs `ln()`. Calculate arbitrary logs using `log x ()`
+> note the predefined `e` constant
+
+```
+plus> log(100)
+2
+plus> ln(e)
+1
+plus> log 5 (25)
+2
+```
+
+#### Ans
+
+use `ans` to access the output of the last command
+
+```
+plus> 108 * 34
+3672
+plus> ans / 2
+1836
+plus> ans-1800
+36
+plus> ans / 6
+6
 ```
