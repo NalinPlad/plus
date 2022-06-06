@@ -1,9 +1,8 @@
 #[macro_use]
 extern crate lalrpop_util;
-extern crate colored;
 extern crate rustyline;
 
-use colored::*;
+
 use core::f64::consts::E;
 use core::f64::consts::PI;
 use std::collections::HashMap;

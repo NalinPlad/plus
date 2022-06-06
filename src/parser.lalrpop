@@ -5,18 +5,23 @@ use lalrpop_util::ParseError;
 grammar<'s>(symtab:&'s mut HashMap<String,f64>);
 
 pub Statement: f64 = {
-    Expr,
+    <Expr>,
     <s:Symbol> "=" <e:Expr>  => {
         symtab.insert(s,e);
         e
     },
 }
 
+
 Expr:f64 = {
-    <e:Expr> "+" <f:Factor> => e+f,
-    <e:Expr> " - " <f:Factor> => e-f,
-    <e:Expr> "–" <f:Factor> => e-f,
-    
+    <Builtin>,
+    <e:Expr> "+" <b:Builtin> => e+b,
+    <e:Expr> " - " <b:Builtin> => e-b,
+    <e:Expr> "–" <b:Builtin> => e-b,
+};
+
+Builtin:f64 = {
+    <Factor>,
     "sin(" <e:Expr> ")"  => e.sin(),
     "cos(" <e:Expr> ")"  => e.cos(),
     "tan(" <e:Expr> ")"  => e.tan(),
@@ -35,8 +40,8 @@ Expr:f64 = {
     "log" <t:Term> "(" <e:Expr> ")" => e.log(t),
     "ln(" <e:Expr> ")" => e.ln(),
 
-    <Factor>
-};
+}
+
 
 Factor:f64 = {
     <f:Factor> "^" <t:Term> => f.powf(t),
