@@ -1,3 +1,5 @@
+// plus [+]
+
 #[macro_use]
 extern crate lalrpop_util;
 extern crate rustyline;
@@ -25,6 +27,8 @@ pub fn root(x: f64, n: u32) -> f64 {
         }
     }
 }
+
+// Main loop
 
 fn main() {
     let history_path = "rc.hist.txt";
@@ -100,4 +104,64 @@ fn main() {
         }
     }
     rl.save_history(history_path).unwrap();
+}
+
+
+// Tests
+
+#[cfg(test)]
+mod tests {
+    
+    extern crate lalrpop_util;
+    extern crate rustyline;
+
+
+    use core::f64::consts::E;
+    use core::f64::consts::PI;
+    use std::collections::HashMap;
+
+    lalrpop_mod!(pub parser);
+
+    //Modified parse fn for tests
+    pub fn parse_eq(line: String) -> f64 {
+        let mut symtab_test = HashMap::new();
+
+        symtab_test.insert(String::from("pi"), PI);
+        symtab_test.insert(String::from("e"), E);
+        symtab_test.insert(String::from("ans"), 0.0_f64);
+
+        match parser::StatementParser::new().parse(&mut symtab_test, &line) {
+            Ok(v) => {
+                let mut v_10 = (v * 10000000000.0).round() / 10000000000.0; // 10 digits of decimal precision
+                if v_10 == -0.0{
+                    v_10 = 0.0
+                }
+                return v_10;
+            }
+            Err(e) => panic!("{}", e),
+        };
+    }
+    #[test]
+    fn integer_addition(){
+        let result: f64 = parse_eq(String::from("5+3"));
+        assert_eq!(result, 8.0);
+    }
+
+    #[test]
+    fn float_addition(){
+        let result: f64 = parse_eq(String::from("0.1+0.2"));
+        assert_eq!(result, 0.3);
+    }
+
+    #[test]
+    fn grouping(){
+        let result: f64 = parse_eq(String::from("3(5+3)"));
+        assert_eq!(result, 24.0);
+    }
+
+    #[test]
+    fn builtin_addition(){
+        let result: f64 = parse_eq(String::from("5+sin(50)"));
+        assert_eq!(result, 4.7376251463);
+    }
 }

@@ -11,4 +11,5 @@
 [ ] color prompt
 [ ] bold prompt
 [ ] command line args
-[ ] tests
+[X] tests
+[ ] add more tests
