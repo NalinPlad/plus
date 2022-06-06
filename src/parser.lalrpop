@@ -31,14 +31,23 @@ Builtin:f64 = {
     "cot(" <e:Expr> ")"  => 1.0/e.tan(),
     
     "√" <t:Term> => t.sqrt(),
+    "√(" <e:Expr> ")"=> e.sqrt(),
     "sqrt(" <e:Expr> ")" => e.sqrt(),
 
     "(3)√" <t:Term> => t.cbrt(),
+    "(3)√(" <e:Expr> ")"=> e.sqrt(),
     "cbrt(" <e:Expr> ")" => e.cbrt(),
 
     "log(" <e:Expr> ")" => e.log10(),
     "log" <t:Term> "(" <e:Expr> ")" => e.log(t),
     "ln(" <e:Expr> ")" => e.ln(),
+
+    "round(" <e:Expr> ")" => e.round(),
+    "floor(" <e:Expr> ")" => e.floor(),
+    "ceil(" <e:Expr> ")" => e.ceil(),
+
+    
+
 
 }
 
